@@ -60,8 +60,10 @@ public class HomeController {
         }
 
         Optional<Employer> newEmployer = employerRepository.findById(employerId);
-        Employer employer = newEmployer.get();
-        newJob.setEmployer(employer);
+        if (newEmployer.isPresent()) {
+            Employer employer = newEmployer.get();
+            newJob.setEmployer(employer);
+        }
 
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);
@@ -80,6 +82,4 @@ public class HomeController {
 
         return "view";
     }
-
-
 }
